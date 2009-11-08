@@ -59,8 +59,8 @@
             $(j).removeClass(settings.activeClass);
             $(this).addClass(settings.activeClass);
           } else {
-            $(j+"."+settings.allTag).removeClass(settings.activeClass);
-            $(this).addClass(settings.activeClass);
+            $(this).hasClass(settings.activeClass) ? $(this).removeClass(settings.activeClass) : $(this).addClass(settings.activeClass);
+            $(j+"."+settings.activeClass).length > 0 ? $(j+"."+settings.allTag).removeClass(settings.activeClass) : $(j+"."+settings.allTag).addClass(settings.activeClass);
           }
           /* filter */ 
           $(o).trigger("filter");
