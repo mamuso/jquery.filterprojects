@@ -124,6 +124,12 @@ SugarTest()
         this.assertEqual($("a.filter.active:not(.all)").length, 2);
         var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } })
         this.assertEqual(selected_elements.length, 3);
+        
+        // and when we trigger all the filter must be as it was at the begining
+        $("a.filter[href=#all]").trigger("click");
+        this.assertEqual($("a.filter.active").length, 1);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } })
+        this.assertEqual(selected_elements.length, 6);
       })
       .end()
     .end()
