@@ -81,18 +81,29 @@ SugarTest()
     .before(function() {
       var html_for_test = ""+
         "<div id='music'>"+
-          "<span class='all'>all</span>"+
-          "<span class='jazz'>jazz</span>"+
-          "<span class='rock'>rock</span>"+
-          "<span class='rock jazz'>rock jazz</span>"+
-          "<span class='soul'>soul</span>"+
-          "<span class='blues'>blues</span>"+
+          "<span class='blues 1960 fender'>blues</span>"+
+          "<span class='jazz 1960 gibson'>jazz</span>"+
+          "<span class='rock 1970 gibson'>rock</span>"+
+          "<span class='rock jazz 1970 fender'>rock jazz</span>"+
+          "<span class='soul 1950 fender'>soul</span>"+
+          "<span class='blues 1960 gibson'>blues</span>"+
+          "<span class='soul 1950 fender'>soul</span>"+
+          "<span class='blues 1960 gibson'>blues</span>"+
+          "<span class='soul 1950 fender'>soul</span>"+
+          "<span class='blues 1960 gibson'>blues</span>"+
         "</div>"+
         "<a class='filter all active' href='#all'>all</a>"+
         "<a class='filter' href='#jazz'>jazz</a>"+
         "<a class='filter' href='#rock'>rock</a>"+
         "<a class='filter' href='#soul'>blues</a>"+
-        "<a class='filter' href='#blues'>rock</a>";
+        "<a class='filter' href='#blues'>rock</a>"+
+        "<a class='second-filter all active' href='#all'>all</a>"+
+        "<a class='second-filter' href='#1970'>1970</a>"+
+        "<a class='second-filter' href='#1960'>1960</a>"+
+        "<a class='second-filter' href='#1950'>1950</a>"+
+        "<a class='third-filter all active' href='#all'>all</a>"+
+        "<a class='third-filter' href='#fender'>fender</a>"+
+        "<a class='third-filter' href='#gibson'>gibson</a>";
       $("#html_for_test").html(html_for_test);
     }).
     after(function(){
@@ -115,21 +126,81 @@ SugarTest()
         // triggering jazz
         $("a.filter[href=#jazz]").trigger("click");
         this.assertEqual($("a.filter.active:not(.all)").length, 1);
-        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } })
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
         this.assertEqual(selected_elements.length, 2);
         this.assert(selected_elements.hasClass("jazz"));
         
         // now we also trigger rock
         $("a.filter[href=#rock]").trigger("click");
         this.assertEqual($("a.filter.active:not(.all)").length, 2);
-        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } })
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
         this.assertEqual(selected_elements.length, 3);
         
         // and when we trigger all the filter must be as it was at the begining
         $("a.filter[href=#all]").trigger("click");
         this.assertEqual($("a.filter.active").length, 1);
-        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } })
-        this.assertEqual(selected_elements.length, 6);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 10);
+      })
+      .end()
+    .describe("with more than a filterTagSelector")
+      .before(function(){
+        // set animation speed and pulse to 0 just for test purposes
+        $("#music").filterprojects({
+          animationSpeed: 0,
+          animationPulse: 0,
+          filterTagSelector: ["a.filter", "a.second-filter", "a.third-filter"]
+        });
+      })
+      .it("should filter when you click on it", function(){
+        // triggering jazz
+        $("a.filter[href=#jazz]").trigger("click");
+        this.assertEqual($("a.filter.active:not(.all)").length, 1);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 2);
+        this.assert(selected_elements.hasClass("jazz"));
+        
+        // now we also trigger rock
+        $("a.filter[href=#rock]").trigger("click");
+        this.assertEqual($("a.filter.active:not(.all)").length, 2);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 3);
+
+        // now press on 1960 music!
+        $("a.second-filter[href=#1960]").trigger("click");
+        this.assertEqual($("a.second-filter.active:not(.all)").length, 1);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 1);
+
+        // ok, ok... uncheck 1960 music
+        $("a.second-filter[href=#1960]").trigger("click");
+        this.assertEqual($("a.second-filter.active:not(.all)").length, 0);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 3);
+
+        // It's cool, let me see some blues music also
+        $("a.filter[href=#blues]").trigger("click");
+        this.assertEqual($("a.filter.active:not(.all)").length, 3);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 7);
+
+        // And now we're gonna check music from the 70's
+        $("a.second-filter[href=#1970]").trigger("click");
+        this.assertEqual($("a.second-filter.active:not(.all)").length, 1);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 2);
+
+        // cool! but I only want some classical fender sound
+        $("a.third-filter[href=#fender]").trigger("click");
+        this.assertEqual($("a.third-filter.active:not(.all)").length, 1);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 1);
+        
+        // but, what happens if I want to start again?
+        $("a[href=#all]").trigger("click");
+        this.assertEqual($("a.active").length, 3);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 10);
       })
       .end()
     .end()
