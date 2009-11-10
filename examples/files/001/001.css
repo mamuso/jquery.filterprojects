@@ -27,7 +27,7 @@ pre {
 }
 
 #content {
-  width: 50em;
+  width: 51em;
   background: #f2f2f2;
   margin: 0 auto;
   text-align: left;
@@ -72,6 +72,7 @@ h1 {
   display: inline;
   margin: 0 0.5em 0.5em 0;
 }
+
 
 #example1 .navigation strong {
   display: block;

@@ -5,7 +5,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-  <title>001_author_genre_year</title>
+  <title>003_without_animation</title>
   <script src="../test/assets/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="../jquery.filterprojects.js" type="text/javascript" charset="utf-8"></script>
   <link rel="stylesheet" href="files/001/001.css" type="text/css" media="screen" charset="utf-8"/>
@@ -16,12 +16,16 @@
 
   <div id="content">
     
-      <h1>Authors / Genres / Year</h1>
+      <h1>Filter without animation</h1>
       <pre name="code" class="javascript">
-        
+
     $("#books").filterprojects({
+      animationSpeed: 0,
+      animationPulse: 0,
+      show: { opacity: "1.0" },
+      hide: { opacity: "0.3" },
       filterTagSelector: [ '#author a', '#genre a', '#year a' ]
-    });
+     });
       </pre>
       <div id="example1">
         <div class="navigation">
@@ -76,7 +80,11 @@
   <script type="text/javascript" charset="utf-8">
     $(function(){
        $("#books").filterprojects({
-          filterTagSelector: [ '#author a', '#genre a', '#year a' ]
+         animationSpeed: 0,
+         animationPulse: 0,
+         show: { opacity: "1.0" },
+         hide: { opacity: "0.3" },
+         filterTagSelector: [ '#author a', '#genre a', '#year a' ]
         });
     })
   </script>
