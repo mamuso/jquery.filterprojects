@@ -77,11 +77,11 @@ SugarTest()
       this.assert(different);
     })
   .end()
-  .context('jquery.filterprojects')
+  .context('jquery.filterprojects works')
     .before(function() {
       var html_for_test = ""+
         "<div id='music'>"+
-          "<span class='blues 1960 fender'>blues</span>"+
+          "<span class='blues 1960 fender all'>blues</span>"+ // class all to test allTag
           "<span class='jazz 1960 gibson'>jazz</span>"+
           "<span class='rock 1970 gibson'>rock</span>"+
           "<span class='rock jazz 1970 fender'>rock jazz</span>"+
@@ -94,9 +94,9 @@ SugarTest()
         "</div>"+
         "<a class='filter all active' href='#all'>all</a>"+
         "<a class='filter' href='#jazz'>jazz</a>"+
-        "<a class='filter' href='#rock'>rock</a>"+
+        "<a class='filter give-me-all' href='#rock'>rock</a>"+
         "<a class='filter' href='#soul'>blues</a>"+
-        "<a class='filter' href='#blues'>rock</a>"+
+        "<a class='filter' href='#blues'>rock</a>"+ // class all to test allTag
         "<a class='second-filter all active' href='#all'>all</a>"+
         "<a class='second-filter' href='#1970'>1970</a>"+
         "<a class='second-filter' href='#1960'>1960</a>"+
@@ -109,7 +109,7 @@ SugarTest()
     after(function(){
       $("#html_for_test").html("");
     })
-    .it("should not fail if you don't specify a filterTagSelector", function(){
+    .it("even if you don't specify a filterTagSelector", function(){
       // if you can make this assertion is because the plugin is not broke
       this.assertEqual($("#music").filterprojects().length, $("#music").length);  
     })
@@ -142,7 +142,7 @@ SugarTest()
         var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
         this.assertEqual(selected_elements.length, 10);
       })
-      .end()
+    .end()
     .describe("with more than a filterTagSelector")
       .before(function(){
         // set animation speed and pulse to 0 just for test purposes
@@ -202,8 +202,40 @@ SugarTest()
         var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
         this.assertEqual(selected_elements.length, 10);
       })
-      .end()
     .end()
+    .describe("and should respect your")
+      .before(function(){
+        // set animation speed and pulse to 0 just for test purposes
+        $("#music").filterprojects({
+          animationSpeed: 0,
+          animationPulse: 0,
+          activeClass: "shake-shake-shake",
+          allTag: "give-me-all",
+          randomize: false,
+          filterTagSelector: ["a.filter"]
+        });
+      })
+      .it("activeClass definition", function(){
+        // triggering blues
+        $("a.filter[href=#blues]").trigger("click");
+        // let's see if it's respecting
+        this.assertEqual($("a.filter.shake-shake-shake").length, 1);
+        // and it works?
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 4);
+        this.assert(selected_elements.hasClass("blues"));
+      })
+      .it("activeClass definition", function(){
+        // triggering give-me-all
+        $("a.give-me-all").trigger("click");
+        // let's see if it's respecting
+        this.assertEqual($("a.filter.shake-shake-shake.give-me-all").length, 1);
+        // and it works?
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } });
+        this.assertEqual(selected_elements.length, 10);
+      })
+    .end()
+  .end()
 .run();
 
 // ]]>
