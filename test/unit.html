@@ -40,10 +40,23 @@ SugarTest()
     .before(function() {
       var html_for_test = ""+
         "<div id='music'>"+
-          "<span id='jazz'>jazz</span>"+
-          "<span id='rock'>rock</span>"+
-          "<span id='soul'>soul</span>"+
-          "<span id='blues'>blues</span>"+
+          "<span class='jazz'>jazz</span>"+
+          "<span class='rock'>rock</span>"+
+          "<span class='soul'>soul</span>"+
+          "<span class='blues'>blues</span>"+
+          "<span class='jazz'>jazz</span>"+
+          "<span class='rock'>2rock</span>"+
+          "<span class='soul'>2soul</span>"+
+          "<span class='blues'>2blues</span>"+
+          "<span class='jazz'>2jazz</span>"+
+          "<span class='rock'>3rock</span>"+
+          "<span class='soul'>3soul</span>"+
+          "<span class='blues'>3blues</span>"+
+          "<span class='jazz'>4jazz</span>"+
+          "<span class='rock'>4rock</span>"+
+          "<span class='soul'>4soul</span>"+
+          "<span class='blues'>5blues</span>"+
+          "<span class='blues'>6blues</span>"+
         "</div>";
       $("#html_for_test").html(html_for_test);
     })
@@ -60,70 +73,61 @@ SugarTest()
       $(collection).each(function(i,o){
         if($("#music span")[i] != this){ different = true;}
       });
-      this.assert(different); // can this be false?
+      // this can be false because is random, but I'm not sure how to test a random issue :)
+      this.assert(different);
     })
   .end()
+  .context('jquery.filterprojects')
+    .before(function() {
+      var html_for_test = ""+
+        "<div id='music'>"+
+          "<span class='all'>all</span>"+
+          "<span class='jazz'>jazz</span>"+
+          "<span class='rock'>rock</span>"+
+          "<span class='rock jazz'>rock jazz</span>"+
+          "<span class='soul'>soul</span>"+
+          "<span class='blues'>blues</span>"+
+        "</div>"+
+        "<a class='filter all active' href='#all'>all</a>"+
+        "<a class='filter' href='#jazz'>jazz</a>"+
+        "<a class='filter' href='#rock'>rock</a>"+
+        "<a class='filter' href='#soul'>blues</a>"+
+        "<a class='filter' href='#blues'>rock</a>";
+      $("#html_for_test").html(html_for_test);
+    }).
+    after(function(){
+      $("#html_for_test").html("");
+    })
+    .it("should not fail if you don't specify a filterTagSelector", function(){
+      // if you can make this assertion is because the plugin is not broke
+      this.assertEqual($("#music").filterprojects().length, $("#music").length);  
+    })
+    .describe("with a filterTagSelector")
+      .before(function(){
+        // set animation speed and pulse to 0 just for test purposes
+        $("#music").filterprojects({
+          animationSpeed: 0,
+          animationPulse: 0,
+          filterTagSelector: ["a.filter"]
+        });
+      })
+      .it("should filter when you click on it", function(){
+        // triggering jazz
+        $("a.filter[href=#jazz]").trigger("click");
+        this.assertEqual($("a.filter.active:not(.all)").length, 1);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } })
+        this.assertEqual(selected_elements.length, 2);
+        this.assert(selected_elements.hasClass("jazz"));
+        
+        // now we also trigger rock
+        $("a.filter[href=#rock]").trigger("click");
+        this.assertEqual($("a.filter.active:not(.all)").length, 2);
+        var selected_elements = $("#music span").filter(function(){ if($(this).css("display") != "none"){ return this } })
+        this.assertEqual(selected_elements.length, 3);
+      })
+      .end()
+    .end()
 .run();
-
-
-
-// 
-// SugarTest()
-//   .before(function() {
-//     this.extra = 'extrawadus';
-//   })
-//   .context('A context')
-//     .before(function() {
-//       this.wadus = 'w';
-//     })
-//     .it('runs its root before setting', function() {
-//       this.assertEqual('extrawadus', this.extra);
-//     })
-//     .it('runs its before setting', function() {
-//       this.assertEqual('w', this.wadus);
-//     })
-//     .describe('when nested')
-//       .it('runs its parent setup function', function() {
-//         this.assertEqual('w', this.wadus);
-//       })
-//     .end()
-//     .describe('when nested having a setup function')
-//       .before(function() {
-//         this.wadus += 'a';
-//       })
-//       .it('runs both setup functions', function() {
-//         this.assertEqual('wa', this.wadus);
-//       })
-//       .describe('with more than a nesting level')
-//         .before(function() {
-//           this.wadus += 'd';
-//         })
-//         .it('runs setup methods in order', function() {
-//           this.assertEqual('wad', this.wadus);
-//         })
-//       .end()
-//     .end()
-//     .describe('that creates a DOM node')
-//       .before(function() {
-//         document.body.appendChild(document.createElement('h6'));
-//       })
-//       .after(function() {
-//         var h6 = document.getElementsByTagName('h6')[0];
-//         h6.parentNode.removeChild(h6);
-//       })
-//       .it('yes, really, creates the node added', function() {
-//         this.assertEqual(1, document.getElementsByTagName('h6').length);
-//       })
-//     .end()
-//     .describe('whose previous context had an after function defined')
-//       .should('find that the function was invoked', function() {
-//         this.assertEqual(0, document.getElementsByTagName('h6').length);
-//       })
-//   .root()
-//   .it('SugarTest root is a context too', function() {
-//     this.assert(true);
-//   })
-// .run();
 
 // ]]>
 </script>

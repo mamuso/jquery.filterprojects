@@ -78,5 +78,7 @@
       
     });
     
+    return this
+    
   };
 })(jQuery);
