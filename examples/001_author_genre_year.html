@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>001_author_genre_year</title>
+  <script src="../test/assets/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../jquery.filterprojects.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="files/001/001.css" type="text/css" media="screen" charset="utf-8"/>
+  
+</head>
+
+<body>
+
+  <div id="content">
+    
+      <h1>Authors / Genres / Year</h1>
+      <p>
+        Is the simplest way to use the filter.
+      </p>
+      <pre name="code" class="javascript">
+        
+    $("#books").filterprojects({
+      filterTagSelector: [ '#author a', '#genre a', '#year a' ]
+    });
+      </pre>
+      <div id="example1">
+        <div class="navigation">
+          <strong>Author</strong>
+          <ul id="author">
+            <li><a href="#" class="all active">All</a></li>
+            <li><a href="#bateman">Colin Bateman</a></li>
+            <li><a href="#conelly">Michael Conelly</a></li>
+            <li><a href="#ellroy">James Ellroy</a></li>
+            <li><a href="#desaint">Antoine De Saint-Exupery</a></li>
+            <li><a href="#donaldson">Julia Donaldson</a></li>
+          </ul>
+          <strong>Genre</strong>
+          <ul id="genre">
+            <li><a href="#" class="all active">All</a></li>
+            <li><a href="#crime">Crime</a></li>
+            <li><a href="#children">Children</a></li>
+          </ul>
+          <strong>Year</strong>
+          <ul id="year">
+            <li><a href="#" class="all active">All</a></li>
+            <li><a href="#2009">2009</a></li>
+            <li><a href="#2008">2008</a></li>
+            <li><a href="#2005">2005</a></li>
+            <li><a href="#2002">2002</a></li>
+            <li><a href="#1999">1999</a></li>
+            <li><a href="#1998">1998</a></li>
+            <li><a href="#1995">1995</a></li>
+          </ul>
+        </div><!-- .navigation -->
+
+        <div class="main">
+          <ul id="books">
+            <li class="bateman 2009 crime"><img src="files/001/mistery-man.jpg" width="120" height="130" alt="Mistery Man"/></li>
+            <li class="conelly 2009 crime"><img src="files/001/lost-light.jpg" width="120" height="130" alt="Lost Light"/></li>
+            <li class="donaldson 2009 children"><img src="files/001/stick-man.jpg" width="120" height="130" alt="Stick Man"/></li>
+            <li class="bateman 2008 crime"><img src="files/001/horse-name.jpg" width="120" height="130" alt="Horse Name"/></li>
+            <li class="conelly 2008 crime"><img src="files/001/brass-veredict.jpg" width="120" height="130" alt="Brass Veredict"></li>
+            <li class="bateman 2005 crime"><img src="files/001/murphys-revenge.jpg" width="120" height="130" alt="Murphys Revenge"/></li>
+            <li class="donaldson 2002 children"><img src="files/001/giant.jpg" width="120" height="130" alt="Giant"/></li>
+            <li class="ellroy 2002 crime"><img src="files/001/cold-six.jpg" width="120" height="130" alt="Cold Six"/></li>
+            <li class="donaldson 1999 children"><img src="files/001/gruffalo.jpg" width="120" height="130" alt="Gruffalo"/></li>
+            <li class="ellroy 1998 crime"><img src="files/001/white-jazz.jpg" width="120" height="130" alt="White Jazz"/></li>
+            <li class="desaint 1995 children"><img src="files/001/principito.jpg" width="120" height="130" alt="Principito"/></li>
+            <li class="ellroy 1995 crime"><img src="files/001/american-tabloid.jpg" width="120" height="130" alt="American Tabloid"/></li>
+          </ul>
+        </div>
+    </div>
+    
+    
+  </div>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+       $("#books").filterprojects({
+          filterTagSelector: [ '#author a', '#genre a', '#year a' ]
+        });
+    })
+  </script>
+</body>
+</html>

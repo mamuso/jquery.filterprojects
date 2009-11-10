@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>002_post_filter</title>
+  <script src="../test/assets/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../jquery.filterprojects.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="files/002/002.css" type="text/css" media="screen" charset="utf-8"/>
+  
+</head>
+
+<body>
+
+  <div id="content">
+    
+      <h1>Filter a post list</h1>
+      <p>
+        Is the simplest way to use the filter.
+      </p>
+      <pre name="code" class="javascript">
+        
+    $("#posts").filterprojects({
+      animationSpeed: 1000,
+      animationPulse: 180,
+      randomize: false,
+      show: { height: 'show' },
+      hide: { height: 'hide' },
+      filterTagSelector: [ '#tags a' ]
+    });
+      </pre>
+      <div id="example2">
+        <div class="navigation">
+          <strong>Our nice tag cloud, click to filter the content :)</strong>
+          <ul id="tags">
+            <li><a href="#" class="all active">Whatever</a></li>
+            <li><a class="tag-5" href="#html">html</a></li>
+            <li><a class="tag-3" href="#css">css</a></li>
+            <li><a class="tag-1" href="#javascript">javascript</a></li>
+            <li><a class="tag-3" href="#magic">magic</a></li>
+            <li><a class="tag-2" href="#science">science</a></li>
+            <li><a class="tag-4" href="#wadus">wadus</a></li>
+          </ul>
+
+        </div><!-- .navigation -->
+
+        <div class="main">
+          <ul id="posts">
+            <li class="science css wadus">
+              <span>
+                <strong>Rounded corners!</strong>
+                FTW.
+              </span>
+            </li>
+            <li class="magic wadus">
+              <span>
+                <strong>Oh!</strong>
+                It's magic
+              </span>
+            </li>
+            <li class="science">
+              <span>
+                <strong>What about science</strong>
+                uhm?
+              </span>
+            </li>
+            <li class="javascript html css">
+              <span>
+                <strong>Follow the fron-end man</strong>
+                it's a nice guy
+              </span>
+            </li>
+            <li class="magic">
+              <span>
+                <strong>Just for magic</strong>
+                oh!
+              </span>
+            </li>
+            <li class="wadus">
+              <span>
+                <strong>"Arenal de Sevilla y ole! Torre del Oro"</strong>
+                a spaniard song
+              </span>
+            </li>
+            <li class="css wadus">
+              <span>
+                <strong>Say "display:none"</strong>
+                I don't find the object
+              </span>
+            </li>
+            <li class="javascript">
+              <span>
+                <strong>alert("hello world!")</strong>
+                nothing special here
+              </span>
+            </li>
+          </ul>
+        </div>
+    </div>
+    
+    
+  </div>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+       $("#posts").filterprojects({
+         animationSpeed: 1000,
+         animationPulse: 180,
+         randomize: false,
+         show: { height: 'show' },
+         hide: { height: 'hide' },
+         filterTagSelector: [ '#tags a' ]
+       });
+    })
+  </script>
+</body>
+</html>
