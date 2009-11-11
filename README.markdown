@@ -1,6 +1,7 @@
 # jquery.filterprojects
 
-This is a jquery plugin that allows you filter a collection of elements visually by the intersection of 'tag groups'. The first idea for this plugin was inspired by this <a href="http://www.newmediacampaigns.com/files/posts/filterable/filterable.html">filterable plugin</a>, but the concept was developed for the projects section on <a href="http://the-cocktail.com/">the cocktail</a> website.
+This is a jquery plugin that allows you filter a collection of elements visually by the intersection of 'tag groups'. Inspired by this <a href="http://www.newmediacampaigns.com/files/posts/filterable/filterable.html">filterable plugin</a>, but made after solve the projects section on <a href="http://the-cocktail.com/">the cocktail</a> website :)
+
 
 
 ## You need jquery :)
